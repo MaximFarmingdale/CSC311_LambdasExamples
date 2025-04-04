@@ -4,6 +4,7 @@ package org.example;
 // Demonstrating lambdas and streams with an array of Strings.
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ArraysAndStreams2 {
    public static void main(String[] args) {
@@ -32,7 +33,33 @@ public class ArraysAndStreams2 {
                .filter(s -> s.compareToIgnoreCase("n") < 0)
                .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                .collect(Collectors.toList()));
+
+      System.out.printf("strings that start with a vowel: %s%n",
+              Arrays.stream(strings)
+                      .filter(word -> {
+                         String vowel = "aeiouAEIOU";
+                         boolean isVowel = false;
+                         for (int i = 0; i < vowel.length(); i++) {
+                            if (word.startsWith(String.valueOf(vowel.charAt(i))))
+                               isVowel = true;
+                         }
+                         return isVowel;
+                      })
+                      .collect(Collectors.toList()));
+      StringBuilder allStrings = new StringBuilder();
+      Arrays.stream(strings).forEach(word -> {
+         allStrings.append(word).append(", ");
+      });
+      System.out.printf("all strings as one string: %s%n", allStrings.toString());
+      System.out.printf("strings that have more than 5 characters: %s%n",
+              Arrays.stream(strings)
+                      .filter(word -> {
+                          return word.length() > 5;
+                      })
+                      .collect(Collectors.toList()));
+
    }
+
 } 
 
 
